@@ -1,0 +1,386 @@
+/* Theme · Marginalia — "the annotated reader". Every page is a page of a printed book that a teacher has marked up:
+   running heads and folios, a title page, a table of contents, margin notes in a fountain pen, corrections in red ink,
+   highlighter on what matters. Source: `[data-theme="marginalia"]` = [data-theme="marginalia"], `calc(var(--u) * 2.4)` = calc(var(--u) * 2.4)  (theme_build.py).
+   Type: Lora (text) · Instrument Serif (titles) · Nothing You Could Do (hand) · Noto Serif SC + Zhuque Fangsong (CJK, subset to the deck).
+   Motion: ink (left-to-right pen wipe).  Sound: paper and pencil.  Do not use the section sign in this file; the preprocessor owns it. */
+/*@FONTS*/
+@font-face { font-family: "Lora"; src: url("../fonts/lora-400.woff2") format("woff2"); font-weight: 400 500; font-style: normal; font-display: block; }
+@font-face { font-family: "Lora"; src: url("../fonts/lora-400i.woff2") format("woff2"); font-weight: 400 500; font-style: italic; font-display: block; }
+@font-face { font-family: "Lora"; src: url("../fonts/lora-700.woff2") format("woff2"); font-weight: 600 900; font-style: normal; font-display: block; }
+@font-face { font-family: "Instrument Serif"; src: url("../fonts/instrument-serif-400.woff2") format("woff2"); font-weight: 400 900; font-style: normal; font-display: block; }
+@font-face { font-family: "Instrument Serif"; src: url("../fonts/instrument-serif-400i.woff2") format("woff2"); font-weight: 400 900; font-style: italic; font-display: block; }
+@font-face { font-family: "Nothing You Could Do"; src: url("../fonts/nothing-you-could-do-400.woff2") format("woff2"); font-weight: 400 900; font-display: block; }
+
+:root[data-theme="marginalia"] {
+  --paper: #f2e9d3; --navy: #2a211c; --navy-2: #4b3b33; --muted: #7a6a5c;
+  --tomato: #8c2f39; --mustard: #f3da6a; --teal: #3f6b57; --sky: #2d4a7a; --lilac: #7a5a86; --white: #fffbf0;
+  --tomato-rgb: 140, 47, 57; --mustard-rgb: 243, 218, 106; --teal-rgb: 63, 107, 87; --sky-rgb: 45, 74, 122; --lilac-rgb: 122, 90, 134; --ink-rgb: 42, 33, 28;
+  --tomato-t: #f0d9d3; --teal-t: #dce9df; --lilac-t: #e9dfee; --sky-t: #dce4ef; --mustard-t: #f8eebf;
+  --line-sky: rgba(45, 74, 122, 0.16);
+  --bw: 1px; --off: 0px; --r: calc(var(--u) * 0.3); --r-sm: calc(var(--u) * 0.2);
+  --rule: rgba(var(--ink-rgb), 0.3); --rule-2: rgba(var(--ink-rgb), 0.14);
+  --soft: 0 calc(var(--u) * 0.15) calc(var(--u) * 0.9) rgba(70, 45, 25, 0.16);
+  --font: "Lora", "Noto Serif SC", "Songti SC", "Noto Serif", serif;
+  --display: "Instrument Serif", "Noto Serif SC", "Songti SC", serif;
+  --hand: "Nothing You Could Do", "Zhuque Fangsong", "Kaiti SC", "STKaiti", cursive;
+  --fang: "Zhuque Fangsong", "FangSong", "STFangsong", "Noto Serif SC", serif;
+  --mo-style: ink;
+}
+[data-theme="marginalia"] :is(.c-tomato, .p-tomato, .badge.c-tomato) { --c: var(--tomato); }
+[data-theme="marginalia"] :is(.c-mustard, .p-mustard, .badge.c-mustard) { --c: var(--navy); }
+[data-theme="marginalia"] :is(.c-teal, .p-teal, .badge.c-teal) { --c: var(--teal); }
+[data-theme="marginalia"] :is(.c-sky, .p-sky, .badge.c-sky) { --c: var(--sky); }
+[data-theme="marginalia"] :is(.c-lilac, .p-lilac, .badge.c-lilac) { --c: var(--lilac); }
+[data-theme="marginalia"] :is(.c-navy, .p-navy, .p-outline) { --c: var(--navy); }
+
+/* ───────── the page ───────── */
+[data-theme="marginalia"] body {
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(ellipse at 18% 0%, rgba(255, 255, 255, 0.6), transparent 55%),
+    radial-gradient(ellipse at 100% 100%, rgba(150, 110, 60, 0.13), transparent 55%),
+    repeating-linear-gradient(0deg, rgba(120, 90, 50, 0.03) 0 1px, transparent 1px 3px);
+  background-size: auto; background-attachment: fixed;
+  font-family: var(--font); font-weight: 400; font-feature-settings: "kern", "liga", "onum";
+}
+/* binding: a soft gutter and a line of stitches down the left edge */
+[data-theme="marginalia"] body::before { content: ""; position: fixed; left: 0; top: 0; bottom: 0; width: calc(var(--u) * 2.8); z-index: 1; pointer-events: none; background: linear-gradient(90deg, rgba(70, 45, 25, 0.3), rgba(70, 45, 25, 0.08) 58%, transparent); }
+[data-theme="marginalia"] body::after { content: ""; position: fixed; left: calc(var(--u) * 1.25); top: calc(var(--u) * 2.4); bottom: calc(var(--foot) + calc(var(--u) * 2.4)); width: 2px; z-index: 1; pointer-events: none; background: repeating-linear-gradient(to bottom, rgba(70, 45, 25, 0.38) 0 calc(var(--u) * 0.8), transparent calc(var(--u) * 0.8) calc(var(--u) * 1.7)); }
+[data-theme="marginalia"] .scene { padding-left: calc(var(--u) * 4.6); }
+[data-theme="marginalia"] b { font-weight: 700; background: linear-gradient(transparent 62%, rgba(var(--mustard-rgb), 0.8) 62%); padding: 0 0.06em; }
+[data-theme="marginalia"] :is(.lesson-badge, .timer, .ls, .nav, .pill, .badge, .num, .count, .tile, .look, .cc-name, .mc-name, .tally, .hw-k, .step-k, .rec, .seg i) b { background: none; padding: 0; }
+[data-theme="marginalia"] .title, [data-theme="marginalia"] .cover-title, [data-theme="marginalia"] .div-title, [data-theme="marginalia"] .again-title, [data-theme="marginalia"] .brk-title { font-family: var(--display); font-weight: 400; letter-spacing: -0.005em; }
+[data-theme="marginalia"] .title { font-size: calc(var(--u) * 3.5); line-height: 1.08; }
+
+/* chrome: a pen line for progress, a printed footer with the folio, ribbons for the parts */
+[data-theme="marginalia"] .progress { height: 3px; background: rgba(var(--ink-rgb), 0.08); }
+[data-theme="marginalia"] .progress-fill { background: var(--tomato); border-right: 0; }
+[data-theme="marginalia"] .nav { background: var(--white); border-top: 1px solid var(--rule); box-shadow: 0 calc(var(--u) * -0.2) 0 var(--paper), 0 calc(var(--u) * -0.28) 0 rgba(var(--ink-rgb), 0.12); font-family: var(--font); font-weight: 400; }
+[data-theme="marginalia"] .nav button { background: none; border: 0; border-bottom: 1px solid transparent; border-radius: 0; padding: calc(var(--u) * 0.3) calc(var(--u) * 0.5); color: var(--navy-2); font-weight: 400; letter-spacing: 0.03em; }
+[data-theme="marginalia"] .nav button:hover { background: none; color: var(--tomato); border-bottom-color: var(--tomato); }
+[data-theme="marginalia"] .nav .next { color: var(--tomato); font-weight: 700; border-bottom-color: var(--tomato); padding: calc(var(--u) * 0.3) calc(var(--u) * 0.9); }
+[data-theme="marginalia"] .nav .next:hover { background: var(--tomato); color: var(--white); }
+[data-theme="marginalia"] .nav .mid { color: var(--navy-2); letter-spacing: 0.02em; font-style: italic; }
+[data-theme="marginalia"] .nav .mid[data-no]::before { content: "\2014\00a0" attr(data-no) "\00a0\2014"; font-family: var(--display); font-style: normal; font-size: 1.7em; letter-spacing: 0.06em; color: var(--tomato); margin-right: calc(var(--u) * 1.2); vertical-align: -0.08em; }
+[data-theme="marginalia"] .nav .brand { font-style: italic; text-transform: none; letter-spacing: 0.04em; font-size: max(13px, 0.9em); }
+[data-theme="marginalia"] .snd-btn svg { stroke: var(--navy-2); }
+[data-theme="marginalia"] .rail .rail-tab { border: 0; border-radius: 0; width: calc(var(--rail) - 7px); margin-left: 7px; opacity: 0.78; font-family: var(--font); letter-spacing: 0.14em; font-weight: 700; padding-left: 0; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 10% 50%); }
+[data-theme="marginalia"] .rail .rail-tab.is-current { opacity: 1; transform: translateX(-5px); width: calc(var(--rail) + 1px); box-shadow: none; }
+[data-theme="marginalia"] .rail .rail-tab.c-mustard { color: var(--navy); }
+
+/* labels: running-head small caps, not pills */
+[data-theme="marginalia"] .head { border-bottom: 1px solid var(--rule); padding-bottom: calc(var(--u) * 0.8); min-height: calc(var(--u) * 3.2); }
+[data-theme="marginalia"] .pill { background: none; border: 0; border-radius: 0; color: var(--c, var(--tomato)); font-family: var(--font); font-weight: 700; letter-spacing: 0.22em; padding: 0; text-transform: uppercase; }
+[data-theme="marginalia"] .pill::before { content: "\00a7"; font-family: var(--display); letter-spacing: 0; font-size: 1.25em; line-height: 1; opacity: 0.8; }
+[data-theme="marginalia"] .p-mustard { background: linear-gradient(transparent 14%, var(--mustard) 14% 86%, transparent 86%); color: var(--navy); padding: 0 0.6em; }
+[data-theme="marginalia"] .p-outline { color: var(--navy-2); font-family: var(--fang); letter-spacing: 0.1em; text-transform: none; }
+[data-theme="marginalia"] .p-outline::before { content: none; }
+[data-theme="marginalia"] .head-zh { font-family: var(--fang); font-style: normal; color: var(--navy-2); font-weight: 400; letter-spacing: 0.06em; }
+[data-theme="marginalia"] .count { font-family: var(--display); font-size: max(16px, calc(var(--u) * 1.5)); font-weight: 400; color: var(--tomato); letter-spacing: 0.08em; }
+[data-theme="marginalia"] .rec { background: none; border: 0; border-radius: 0; color: var(--tomato); font-family: var(--hand); font-weight: 400; letter-spacing: 0.04em; font-size: max(16px, calc(var(--u) * 1.15)); }
+[data-theme="marginalia"] .rec i { background: var(--tomato); }
+/* pen-drawn numerals and labels */
+[data-theme="marginalia"] .badge:not(.big):not(.q-badge), [data-theme="marginalia"] .num { background: none; color: var(--c, var(--tomato)); border: 1.5px solid currentColor; border-radius: 52% 48% 55% 45% / 47% 56% 44% 53%; font-family: var(--hand); font-weight: 400; font-size: max(17px, calc(var(--u) * 1.6)); width: calc(var(--u) * 2.8); height: calc(var(--u) * 2.8); transform: rotate(-4deg); }
+[data-theme="marginalia"] .badge.big, [data-theme="marginalia"] .badge.q-badge { background: none; width: auto; height: auto; border: 0; border-bottom: 1px solid currentColor; border-radius: 0; padding: 0 0.1em 0.18em; font-family: var(--font); font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; font-size: max(13px, calc(var(--u) * 0.95)); color: var(--c, var(--tomato)); }
+[data-theme="marginalia"] .badge.big.c-mustard, [data-theme="marginalia"] .badge.q-badge.c-mustard { background: linear-gradient(transparent 10%, var(--mustard) 10% 90%, transparent 90%); border-bottom: 0; padding: 0 0.6em; color: var(--navy); }
+
+/* surfaces: slips of paper and framed printed pages */
+[data-theme="marginalia"] .card { background: var(--white); border: 1px solid var(--rule); border-radius: var(--r); box-shadow: var(--soft); }
+[data-theme="marginalia"] .index-card { background-image: none; box-shadow: var(--soft), inset 0 0 0 calc(var(--u) * 0.55) var(--white), inset 0 0 0 calc(calc(var(--u) * 0.55) + 1px) var(--rule-2); }
+[data-theme="marginalia"] :is(.rule-card, .hy-card, .send-card, .hw-card, .wr, .lap, .ts, .why-pass, .tally):not(.x) { position: relative; }
+[data-theme="marginalia"] :is(.rule-card, .hy-card, .send-card, .hw-card, .lap, .ts, .why-pass)::before { content: ""; position: absolute; top: calc(var(--u) * -0.9); left: 50%; width: calc(var(--u) * 7); height: calc(var(--u) * 2); margin-left: calc(var(--u) * -3.5); background: rgba(var(--mustard-rgb), 0.62); transform: rotate(-2.2deg); box-shadow: 0 calc(var(--u) * 0.1) calc(var(--u) * 0.3) rgba(0, 0, 0, 0.1); z-index: 2; pointer-events: none; }
+[data-theme="marginalia"] :is(.rule-card, .hy-card, .send-card, .hw-card, .lap, .ts, .why-pass):nth-child(even)::before { background: rgba(var(--sky-rgb), 0.26); transform: rotate(1.8deg); }
+[data-theme="marginalia"] :is(.rule-card, .hy-card, .hw-card, .lap, .ts):nth-child(3n)::before { background: rgba(var(--tomato-rgb), 0.24); transform: rotate(-1deg); }
+
+/* 看对照 → a sticky note; the answer → the teacher's correction in red ink */
+[data-theme="marginalia"] .look { background: var(--mustard); color: var(--navy); border: 0; border-radius: calc(var(--u) * 0.2); transform: rotate(-1.2deg); box-shadow: 0 calc(var(--u) * 0.2) calc(var(--u) * 0.7) rgba(70, 45, 25, 0.28); font-family: var(--font); font-weight: 700; letter-spacing: 0.05em; }
+[data-theme="marginalia"] .look::before { content: "\270E"; width: auto; height: auto; background: none; border: 0; border-radius: 0; font-size: 1.15em; line-height: 1; }
+[data-theme="marginalia"] .look:active { transform: rotate(-1.2deg) translate(1px, 1px); box-shadow: 0 calc(var(--u) * 0.1) calc(var(--u) * 0.3) rgba(70, 45, 25, 0.3); }
+[data-theme="marginalia"] .stuck-btn { background: var(--white); box-shadow: 0 calc(var(--u) * 0.15) calc(var(--u) * 0.6) rgba(70, 45, 25, 0.2); }
+[data-theme="marginalia"] .stuck-btn span { color: var(--muted); font-family: var(--fang); }
+[data-theme="marginalia"] .ref-box { background: none; border: 0; border-left: 3px solid var(--tomato); border-radius: 0; box-shadow: none; padding: calc(var(--u) * 0.4) 0 calc(var(--u) * 0.4) calc(var(--u) * 1.8); margin-top: calc(var(--u) * 2); }
+[data-theme="marginalia"] .ref-tag { color: var(--tomato); font-family: var(--hand); font-weight: 400; letter-spacing: 0.04em; font-size: max(15px, calc(var(--u) * 1.15)); }
+[data-theme="marginalia"] .ref-en { color: var(--tomato); font-weight: 700; font-style: italic; text-decoration: underline wavy rgba(var(--tomato-rgb), 0.45); text-decoration-thickness: 1.5px; text-underline-offset: 0.28em; }
+[data-theme="marginalia"] .ref-note { color: var(--navy-2); font-family: var(--fang); }
+[data-theme="marginalia"] .fix-good { background: none; border: 0; border-left: 3px solid var(--tomato); border-radius: 0; box-shadow: none; padding: calc(var(--u) * 0.6) 0 calc(var(--u) * 0.6) calc(var(--u) * 1.8); }
+[data-theme="marginalia"] .ok-dot { background: none; color: var(--tomato); border: 1.5px solid var(--tomato); border-radius: 52% 48% 55% 45% / 47% 56% 44% 53%; font-family: var(--hand); transform: rotate(-4deg); }
+[data-theme="marginalia"] .fix-good-en { color: var(--tomato); font-weight: 700; font-style: italic; }
+[data-theme="marginalia"] .fix-good-en b { background: none; text-decoration-color: rgba(var(--tomato-rgb), 0.5); text-decoration-style: wavy; text-decoration-thickness: 1.5px; }
+[data-theme="marginalia"] .fix-note { color: var(--navy-2); font-family: var(--fang); font-weight: 400; }
+
+/* chips → a quiet line of small caps */
+[data-theme="marginalia"] .chip-s { background: none; border: 0; border-radius: 0; box-shadow: none; padding: 0.15em 0.1em; border-bottom: 1px solid var(--rule); font-family: var(--font); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: max(13px, calc(var(--u) * 1.05)); }
+[data-theme="marginalia"] .chip-s em { text-transform: none; font-family: var(--fang); font-weight: 400; letter-spacing: 0.04em; }
+
+/* ───────── timer: a pocket watch in ink ───────── */
+[data-theme="marginalia"] .timer { background: var(--white); border: 1px solid var(--rule); box-shadow: var(--soft); border-radius: 999px; }
+[data-theme="marginalia"] .timer:active { transform: scale(0.98); box-shadow: var(--soft); }
+[data-theme="marginalia"] .t-time { font-family: var(--display); font-weight: 400; letter-spacing: 0.02em; font-size: calc(var(--u) * 2.6); }
+[data-theme="marginalia"] .t-state { font-family: var(--fang); }
+[data-theme="marginalia"] .t-ring-bg { fill: var(--mustard-t); stroke: var(--navy); stroke-width: 1; }
+[data-theme="marginalia"] .t-ring-fg { stroke: var(--tomato); stroke-linecap: round; }
+[data-theme="marginalia"] .t-icon { border-left-color: var(--navy); }
+[data-theme="marginalia"] .timer.is-running .t-ring-bg { fill: var(--teal-t); }
+[data-theme="marginalia"] .timer.is-running .t-ring-fg { stroke: var(--teal); }
+[data-theme="marginalia"] .timer.is-done { background: var(--tomato); color: var(--white); border-color: var(--tomato); }
+[data-theme="marginalia"] .timer.is-done .t-state, [data-theme="marginalia"] .timer.is-done .t-time { color: var(--white); }
+[data-theme="marginalia"] .timer.is-done .t-ring-bg { fill: var(--tomato); stroke: var(--white); }
+[data-theme="marginalia"] .timer.is-done .t-ring-fg { stroke: var(--white); }
+[data-theme="marginalia"] .timer.is-done .t-icon { background: var(--white); }
+[data-theme="marginalia"] .timer-reset { border: 1px dashed var(--muted); border-radius: 999px; font-family: var(--fang); }
+[data-theme="marginalia"] .timer.big { box-shadow: var(--soft); }
+[data-theme="marginalia"] .timer.big .t-time { font-size: calc(var(--u) * 5.8); letter-spacing: 0; }
+[data-theme="marginalia"] .timer.big .t-ring-bg { stroke-width: 1.2; }
+[data-theme="marginalia"] .timer.big .t-ring-fg { stroke-width: 2.4; }
+
+/* ───────── cover: the title page ───────── */
+[data-theme="marginalia"] .cover-grid { grid-template-columns: 1fr; justify-items: center; align-content: center; text-align: center; gap: calc(var(--u) * 0.4); position: relative; border: 5px double rgba(var(--ink-rgb), 0.38); padding: calc(var(--u) * 2) calc(var(--u) * 6) calc(var(--u) * 2.4); margin: 0; }
+[data-theme="marginalia"] .cover-text { display: flex; flex-direction: column; align-items: center; }
+[data-theme="marginalia"] .cover-art { order: -1; justify-self: center; position: static; }
+[data-theme="marginalia"] .art-card { display: none; }
+[data-theme="marginalia"] .lesson-badge { position: static; transform: none; width: auto; height: auto; background: none; color: var(--tomato); border: 0; box-shadow: none; flex-direction: row; align-items: center; gap: calc(var(--u) * 1.4); }
+[data-theme="marginalia"] .lesson-badge::before, [data-theme="marginalia"] .lesson-badge::after { content: ""; width: calc(var(--u) * 8); height: 1px; background: var(--tomato); opacity: 0.6; }
+[data-theme="marginalia"] .lesson-badge::before { order: -1; }
+[data-theme="marginalia"] .lesson-badge span { font-family: var(--font); letter-spacing: 0.4em; font-size: max(14px, calc(var(--u) * 0.95)); font-weight: 700; }
+[data-theme="marginalia"] .lesson-badge b { font-family: var(--display); font-weight: 400; font-style: italic; font-size: calc(var(--u) * 6); letter-spacing: 0; line-height: 1; }
+[data-theme="marginalia"] .cover-pills { justify-content: center; margin: calc(var(--u) * 1.4) 0 calc(var(--u) * 1.2); gap: calc(var(--u) * 1.4); }
+[data-theme="marginalia"] .cover-title { font-size: calc(var(--u) * 8.8); line-height: 0.96; letter-spacing: -0.01em; }
+[data-theme="marginalia"] .cover-zh { font-family: var(--fang); font-weight: 400; font-size: calc(var(--u) * 2.5); letter-spacing: 0.24em; margin-top: calc(var(--u) * 1.2); padding-left: 0.24em; }
+[data-theme="marginalia"] .cover-zh::before { margin: 0 auto calc(var(--u) * 1.2); width: calc(var(--u) * 5); height: 2px; background: var(--tomato); border-radius: 0; }
+[data-theme="marginalia"] .cover-tag { border-left: 0; padding: calc(var(--u) * 1.2) 0 0; margin-top: calc(var(--u) * 1.4); border-top: 4px double rgba(var(--ink-rgb), 0.4); min-width: calc(var(--u) * 36); }
+[data-theme="marginalia"] .cover-tag .en { font-family: var(--font); font-style: italic; font-weight: 400; font-size: calc(var(--u) * 1.8); }
+[data-theme="marginalia"] .cover-tag .zh { font-family: var(--fang); letter-spacing: 0.1em; }
+[data-theme="marginalia"] .cover-foot { justify-content: center; font-family: var(--font); font-style: italic; text-transform: none; letter-spacing: 0.1em; font-weight: 400; }
+/* closing: the same page, signed off */
+[data-theme="marginalia"] .cover-grid.end .lesson-badge { display: none; }
+[data-theme="marginalia"] .cover-grid.end .cover-art::before { content: "Finis"; display: block; font-family: var(--display); font-style: italic; font-size: calc(var(--u) * 3.6); color: var(--tomato); letter-spacing: 0.04em; }
+[data-theme="marginalia"] .cover-grid.end .cover-title.sm { font-size: calc(var(--u) * 6.6); }
+[data-theme="marginalia"] .cover-grid.end .cover-zh::before { background: var(--tomato); }
+
+/* ───────── route → table of contents ───────── */
+[data-theme="marginalia"] .route { display: flex; flex-direction: column; justify-content: center; align-items: stretch; gap: 0; padding: 0 calc(var(--u) * 6) calc(var(--u) * 1) calc(var(--u) * 4); counter-reset: ch; }
+[data-theme="marginalia"] .station { display: grid; grid-template-columns: calc(var(--u) * 5.5) 1fr auto; column-gap: calc(var(--u) * 2.4); align-items: baseline; padding: calc(var(--u) * 1.5) 0; position: relative; border-bottom: 1px solid var(--rule-2); }
+[data-theme="marginalia"] .station::before { content: none; }
+[data-theme="marginalia"] .station-dot { width: auto; height: auto; border: 0; background: none; box-shadow: none; color: var(--tomato); font-family: var(--display); font-style: italic; font-weight: 400; font-size: calc(var(--u) * 4.2); line-height: 1; border-radius: 0; justify-content: flex-start; }
+[data-theme="marginalia"] .station-card { background: none; border: 0; box-shadow: none; margin: 0; padding: 0; min-height: 0; width: auto; text-align: left; display: grid; grid-template-columns: auto 1fr; align-items: baseline; column-gap: calc(var(--u) * 1.4); }
+[data-theme="marginalia"] .station-card::before { content: ""; grid-column: 2; grid-row: 1; border-bottom: 2px dotted rgba(var(--ink-rgb), 0.4); align-self: end; margin-bottom: calc(var(--u) * 0.5); }
+[data-theme="marginalia"] .station-en { grid-column: 1; grid-row: 1; font-family: var(--display); font-size: calc(var(--u) * 3.4); font-weight: 400; letter-spacing: 0; }
+[data-theme="marginalia"] .station-zh { grid-column: 1 / 3; grid-row: 2; font-family: var(--fang); font-size: calc(var(--u) * 1.6); margin: calc(var(--u) * 0.3) 0 0; padding: 0; border: 0; color: var(--navy-2); font-weight: 400; }
+[data-theme="marginalia"] .station::after { content: attr(data-mins); font-family: var(--display); font-style: italic; font-size: calc(var(--u) * 3); color: var(--navy-2); align-self: baseline; padding-left: calc(var(--u) * 0.4); }
+[data-theme="marginalia"] .route-break { background: none; border: 1px dashed var(--muted); color: var(--navy-2); font-family: var(--hand); border-radius: 0; }
+
+/* ───────── rules → numbered instructions, no boxes ───────── */
+[data-theme="marginalia"] .rules4 { grid-template-columns: repeat(4, 1fr); gap: 0; align-items: stretch; align-content: center; }
+[data-theme="marginalia"] .rule-card { background: none; border: 0; border-left: 1px solid var(--rule); border-radius: 0; box-shadow: none; padding: calc(var(--u) * 5.4) calc(var(--u) * 2.2) calc(var(--u) * 2.2) calc(var(--u) * 2.4); min-height: calc(var(--u) * 26); }
+[data-theme="marginalia"] .rule-card:first-child { border-left: 0; }
+[data-theme="marginalia"] .rule-card::before { content: none; }
+[data-theme="marginalia"] .rule-card .num { top: calc(var(--u) * 0.4); left: calc(var(--u) * 2.2); width: auto; height: auto; border: 0; border-radius: 0; transform: none; font-family: var(--display); font-style: italic; font-size: calc(var(--u) * 5.4); line-height: 1; color: var(--tomato); }
+[data-theme="marginalia"] .rule-card .rule-ic { width: calc(var(--u) * 6.6); height: calc(var(--u) * 6.6); margin-bottom: calc(var(--u) * 1.4); opacity: 0.9; }
+[data-theme="marginalia"] .rc-en { font-family: var(--display); font-weight: 400; font-size: calc(var(--u) * 3); letter-spacing: 0; line-height: 1.1; }
+[data-theme="marginalia"] .rc-zh { font-family: var(--fang); font-weight: 400; color: var(--navy-2); }
+
+/* ───────── the prompt page (question, rewrite, fix, make, task, before/after) ───────── */
+[data-theme="marginalia"] .warm-card { padding: calc(var(--u) * 4.8) calc(var(--u) * 6) calc(var(--u) * 3) calc(var(--u) * 7.6); }
+[data-theme="marginalia"] .warm-card .badge.big { left: calc(var(--u) * 7.6); top: calc(var(--u) * 1.8); }
+[data-theme="marginalia"] .warm-zh { font-family: var(--font); font-weight: 400; font-size: calc(var(--u) * 3.6); line-height: 1.5; letter-spacing: 0.04em; }
+[data-theme="marginalia"] .warm-zh::first-letter { color: var(--tomato); }
+[data-theme="marginalia"] .q-card.index-card { padding: calc(var(--u) * 4.8) 36% calc(var(--u) * 3) calc(var(--u) * 6); box-shadow: var(--soft), inset 0 0 0 calc(var(--u) * 0.55) var(--white), inset 0 0 0 calc(calc(var(--u) * 0.55) + 1px) var(--rule-2); background-image: linear-gradient(90deg, transparent calc(64% + calc(var(--u) * 1.6)), rgba(var(--tomato-rgb), 0.5) calc(64% + calc(var(--u) * 1.6)), rgba(var(--tomato-rgb), 0.5) calc(64% + calc(var(--u) * 1.6) + 1.5px), transparent calc(64% + calc(var(--u) * 1.6) + 1.5px)); background-repeat: no-repeat; }
+[data-theme="marginalia"] .q-card .badge.q-badge { left: calc(var(--u) * 6); top: calc(var(--u) * 1.8); }
+[data-theme="marginalia"] .q-card .q-text { font-family: var(--font); font-weight: 400; font-size: calc(var(--u) * 3.3); line-height: 1.3; letter-spacing: 0; }
+[data-theme="marginalia"] .q-card .q-text::first-letter { font-family: var(--display); color: var(--tomato); font-size: 1.5em; line-height: 1; }
+[data-theme="marginalia"] .q-card .stretch { background: none; border: 0; border-bottom: 1px solid var(--lilac); border-radius: 0; color: var(--lilac); font-family: var(--font); font-style: italic; transform: none; top: calc(var(--u) * 1.8); right: calc(var(--u) * 2.6); }
+[data-theme="marginalia"] .q-body { position: relative; }
+[data-theme="marginalia"] .stuck, [data-theme="marginalia"] .look-wrap.stuck { position: static; }
+[data-theme="marginalia"] .q-body .steps { position: absolute; right: calc(var(--u) * 2.2); top: calc(var(--u) * 5.2); width: 28%; white-space: normal; flex-wrap: wrap; font-family: var(--hand); font-style: normal; font-size: max(17px, calc(var(--u) * 1.55)); color: var(--sky); line-height: 1.3; z-index: 3; }
+[data-theme="marginalia"] .q-body .steps .arr { color: var(--tomato); }
+[data-theme="marginalia"] .q-body .steps b { font-family: var(--hand); font-weight: 400; background: none; color: var(--tomato); }
+[data-theme="marginalia"] .q-scene.lq .q-card.index-card { padding-right: calc(var(--u) * 6); background-image: none; }
+[data-theme="marginalia"] .stuck .hints { position: absolute; right: calc(var(--u) * 2.2); top: calc(var(--u) * 13); width: 28%; display: flex; flex-direction: column; gap: calc(var(--u) * 1.6); z-index: 3; }
+[data-theme="marginalia"] .hint { background: none; border: 0; border-left: 2px solid var(--tomato); border-radius: 0; box-shadow: none; padding: calc(var(--u) * 0.1) 0 calc(var(--u) * 0.1) calc(var(--u) * 1.2); transform: rotate(-0.8deg); }
+[data-theme="marginalia"] .hint:nth-child(2) { transform: rotate(0.6deg); }
+[data-theme="marginalia"] .hint-k { width: auto; height: auto; background: none; border: 0; color: var(--tomato); font-family: var(--hand); font-size: max(16px, calc(var(--u) * 1.3)); align-self: flex-start; }
+[data-theme="marginalia"] .hint .en { font-family: var(--hand); font-weight: 400; font-size: max(17px, calc(var(--u) * 1.5)); color: var(--sky); line-height: 1.25; }
+[data-theme="marginalia"] .hint .zh { font-family: var(--fang); color: var(--navy-2); font-weight: 400; }
+[data-theme="marginalia"] .steps { font-family: var(--font); font-style: italic; color: var(--navy-2); font-weight: 400; }
+[data-theme="marginalia"] .steps b { font-style: normal; color: var(--tomato); }
+[data-theme="marginalia"] .full-s { font-family: var(--font); font-style: italic; }
+[data-theme="marginalia"] .focus { font-family: var(--font); }
+[data-theme="marginalia"] .tool-say { font-family: var(--fang); font-weight: 400; }
+[data-theme="marginalia"] .fix-card, [data-theme="marginalia"] .make-card, [data-theme="marginalia"] .ba-card, [data-theme="marginalia"] .task-card { padding-left: calc(var(--u) * 7.6); }
+[data-theme="marginalia"] .fix-card .tile, [data-theme="marginalia"] .make-card .tile { top: calc(var(--u) * 1.4); left: calc(var(--u) * 7.4); }
+[data-theme="marginalia"] .fix-bad, [data-theme="marginalia"] .ba-bad { font-family: var(--font); font-weight: 400; font-size: calc(var(--u) * 3.5); text-decoration: underline wavy rgba(var(--tomato-rgb), 0.55); text-decoration-thickness: 1.5px; text-underline-offset: 0.3em; }
+[data-theme="marginalia"] .fix-prompt { font-family: var(--fang); font-weight: 400; }
+[data-theme="marginalia"] .fix-prompt span { font-family: var(--font); font-style: italic; }
+[data-theme="marginalia"] .make-zh { font-family: var(--font); font-weight: 400; }
+[data-theme="marginalia"] .make-starter { font-family: var(--hand); font-weight: 400; background: none; color: var(--sky); border: 0; border-bottom: 1.5px dashed var(--sky); border-radius: 0; font-size: calc(var(--u) * 3); }
+[data-theme="marginalia"] .make-sub { font-family: var(--fang); }
+[data-theme="marginalia"] .ba-tag { background: none; border: 0; border-bottom: 1px solid var(--tomato); border-radius: 0; color: var(--tomato); font-family: var(--font); letter-spacing: 0.2em; text-transform: uppercase; top: calc(var(--u) * 1.8); left: calc(var(--u) * 7.4); }
+[data-theme="marginalia"] .task-en { font-family: var(--font); font-style: italic; font-weight: 400; font-size: calc(var(--u) * 3.2); }
+[data-theme="marginalia"] .task-do { font-family: var(--fang); }
+[data-theme="marginalia"] .tag { background: none; color: var(--teal); border: 0; border-bottom: 1.5px solid var(--teal); border-radius: 0; font-family: var(--font); font-style: italic; }
+[data-theme="marginalia"] .tile { border: 1.5px solid currentColor; border-radius: calc(var(--u) * 0.2); box-shadow: none; background: var(--white); color: var(--c, var(--navy)); }
+[data-theme="marginalia"] .tile.huge { box-shadow: none; }
+[data-theme="marginalia"] .tile-letter { font-family: var(--display); font-weight: 400; font-style: italic; }
+
+/* ───────── divider → chapter opener ───────── */
+[data-theme="marginalia"] .divider { grid-template-columns: 0.9fr 1.7fr; gap: calc(var(--u) * 6); }
+[data-theme="marginalia"] .div-art { display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; border-top: 4px double rgba(var(--ink-rgb), 0.4); border-bottom: 4px double rgba(var(--ink-rgb), 0.4); padding: calc(var(--u) * 4) calc(var(--u) * 1); }
+[data-theme="marginalia"] .div-art .cassette { display: none; }
+[data-theme="marginalia"] .div-art::before { content: attr(data-top); font-family: var(--font); font-weight: 700; font-size: max(13px, calc(var(--u) * 1.05)); letter-spacing: 0.34em; text-transform: uppercase; color: var(--muted); padding-left: 0.34em; }
+[data-theme="marginalia"] .div-art::after { content: attr(data-main); font-family: var(--display); font-style: italic; font-size: calc(var(--u) * 6.4); line-height: 1.1; text-align: center; color: var(--tomato); margin-top: calc(var(--u) * 1.2); text-transform: lowercase; font-variant-caps: small-caps; letter-spacing: 0.02em; }
+[data-theme="marginalia"] .div-title { font-size: calc(var(--u) * 8.6); line-height: 0.98; }
+[data-theme="marginalia"] .div-en { font-family: var(--font); font-style: italic; font-weight: 400; }
+[data-theme="marginalia"] .div-zh { font-family: var(--fang); font-weight: 400; }
+[data-theme="marginalia"] .again-hero { padding-left: calc(var(--u) * 6); }
+[data-theme="marginalia"] .again-title { font-style: italic; font-size: calc(var(--u) * 11); line-height: 0.95; }
+[data-theme="marginalia"] .again-title::after { content: ""; display: block; width: calc(var(--u) * 18); height: 2px; background: var(--tomato); margin-top: calc(var(--u) * 1.4); transform: rotate(-1deg); }
+[data-theme="marginalia"] .again-zh { font-family: var(--fang); font-weight: 400; letter-spacing: 0.2em; color: var(--navy-2); }
+[data-theme="marginalia"] .brk-ic { background: none; border: 1.5px solid var(--navy); border-radius: 52% 48% 55% 45% / 47% 56% 44% 53%; box-shadow: none; padding: calc(var(--u) * 3); }
+[data-theme="marginalia"] .brk-title { font-style: italic; font-size: calc(var(--u) * 9.4); }
+[data-theme="marginalia"] .brk-zh { font-family: var(--fang); }
+
+/* ───────── hear / why / check / menu / blocks ───────── */
+[data-theme="marginalia"] .hy-card .num { top: calc(var(--u) * -1.2); left: calc(var(--u) * 1.6); }
+[data-theme="marginalia"] .hy-step:nth-child(1) .hy-ic { background: none; }
+[data-theme="marginalia"] .hy-en { font-family: var(--display); font-weight: 400; font-size: calc(var(--u) * 3.2); letter-spacing: 0; line-height: 1.1; }
+[data-theme="marginalia"] .hy-zh { font-family: var(--fang); font-weight: 400; }
+[data-theme="marginalia"] .hy-sub { border-top: 1px solid var(--rule); font-family: var(--hand); font-weight: 400; color: var(--sky); font-size: max(17px, calc(var(--u) * 1.7)); }
+[data-theme="marginalia"] .hy-arrow { color: var(--tomato); font-family: var(--hand); font-weight: 400; }
+[data-theme="marginalia"] .why-q { font-family: var(--fang); }
+[data-theme="marginalia"] .why-q b { color: var(--tomato); }
+[data-theme="marginalia"] .why-s { font-weight: 400; font-size: calc(var(--u) * 3); }
+[data-theme="marginalia"] .why-s .e { border-radius: 0; transition: background-color 250ms ease; }
+[data-theme="marginalia"] .why:has(.wp1.is-in) .e1 { background: linear-gradient(transparent 55%, rgba(var(--tomato-rgb), 0.3) 55%); box-shadow: none; text-decoration: underline wavy var(--tomato); text-decoration-thickness: 1.5px; text-underline-offset: 0.22em; }
+[data-theme="marginalia"] .why:has(.wp2.is-in) .e2 { background: linear-gradient(transparent 55%, rgba(var(--sky-rgb), 0.28) 55%); box-shadow: none; text-decoration: underline wavy var(--sky); text-decoration-thickness: 1.5px; text-underline-offset: 0.22em; }
+[data-theme="marginalia"] .why:has(.wp3.is-in) .e3 { background: linear-gradient(transparent 55%, rgba(var(--mustard-rgb), 0.8) 55%); box-shadow: none; }
+[data-theme="marginalia"] .wp1, [data-theme="marginalia"] .wp2, [data-theme="marginalia"] .wp3 { border-top: 1px solid var(--rule); }
+[data-theme="marginalia"] .wp-h { font-family: var(--font); }
+[data-theme="marginalia"] .wp-fix { font-family: var(--font); font-weight: 400; }
+[data-theme="marginalia"] .wp-fix s { text-decoration-color: var(--tomato); text-decoration-thickness: 1.5px; color: var(--muted); }
+[data-theme="marginalia"] .wp-fix b { color: var(--teal); background: none; }
+[data-theme="marginalia"] .wp-why { font-family: var(--fang); }
+
+[data-theme="marginalia"] .pass-h { border-bottom: 1px solid var(--rule); font-family: var(--font); }
+[data-theme="marginalia"] .pass-h .zh, [data-theme="marginalia"] .head-zh { font-family: var(--fang); }
+[data-theme="marginalia"] .code-card { box-shadow: var(--soft); }
+[data-theme="marginalia"] .cc-top { border-bottom: 1px solid var(--rule); }
+[data-theme="marginalia"] .cc-letter { font-family: var(--display); font-weight: 400; font-style: italic; font-size: calc(var(--u) * 3.6); }
+[data-theme="marginalia"] .cc-ic { background: var(--white); border: 1px solid var(--rule); }
+[data-theme="marginalia"] .cc-name { font-family: var(--font); }
+[data-theme="marginalia"] .cc-q { font-family: var(--font); font-weight: 700; }
+[data-theme="marginalia"] .cc-rule { font-family: var(--fang); font-weight: 400; color: var(--navy-2); }
+[data-theme="marginalia"] .check-strip { font-family: var(--fang); }
+[data-theme="marginalia"] .menu-card { border-radius: calc(var(--u) * 0.3); }
+[data-theme="marginalia"] .menu-card:hover { transform: translateY(-3px); box-shadow: 0 calc(var(--u) * 0.6) calc(var(--u) * 1.6) rgba(70, 45, 25, 0.28); }
+[data-theme="marginalia"] .mc-top { border-bottom: 1px solid var(--rule); }
+[data-theme="marginalia"] .mc-letter { font-family: var(--display); font-weight: 400; font-style: italic; font-size: calc(var(--u) * 9.6); letter-spacing: 0; }
+[data-theme="marginalia"] .mc-ic { background: var(--white); border: 1px solid var(--rule); }
+[data-theme="marginalia"] .mc-name { font-family: var(--display); font-weight: 400; font-size: calc(var(--u) * 2.2); letter-spacing: 0; }
+[data-theme="marginalia"] .mc-q { font-family: var(--fang); font-weight: 400; }
+[data-theme="marginalia"] .menu-note, [data-theme="marginalia"] .foot-note { font-family: var(--fang); font-weight: 400; }
+[data-theme="marginalia"] .bt-name { font-family: var(--display); font-weight: 400; font-size: calc(var(--u) * 5); letter-spacing: 0; }
+[data-theme="marginalia"] .bt-q { font-family: var(--fang); font-weight: 400; }
+[data-theme="marginalia"] .rule-zh { font-family: var(--font); font-weight: 400; }
+[data-theme="marginalia"] .rc-tomato { background: var(--tomato-t); } [data-theme="marginalia"] .rc-teal { background: var(--teal-t); } [data-theme="marginalia"] .rc-mustard { background: var(--mustard-t); } [data-theme="marginalia"] .rc-sky { background: var(--sky-t); } [data-theme="marginalia"] .rc-lilac { background: var(--lilac-t); }
+
+/* ───────── listening: a record on the page + the transport ───────── */
+[data-theme="marginalia"] .listen-art { width: calc(var(--u) * 28); aspect-ratio: 1; border-radius: 50%; position: relative; background:
+    radial-gradient(circle, var(--tomato) 0 15%, #1c1512 15.4% 16.2%, transparent 16.6%),
+    repeating-radial-gradient(circle at 50% 50%, #1c1512 0 1.2px, #2b211c 1.2px 2.6px);
+  box-shadow: 0 calc(var(--u) * 0.6) calc(var(--u) * 2.4) rgba(70, 45, 25, 0.4), inset 0 0 0 calc(var(--u) * 0.35) #3b2f28; }
+[data-theme="marginalia"] .listen-art::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 20deg, transparent 0 20%, rgba(255, 255, 255, 0.1) 25%, transparent 32% 70%, rgba(255, 255, 255, 0.08) 76%, transparent 84%); }
+[data-theme="marginalia"] .listen-art::before { content: attr(data-main); position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 2; font-family: var(--font); font-weight: 700; font-size: max(13px, calc(var(--u) * 1.15)); letter-spacing: 0.14em; text-align: center; color: var(--white); width: calc(var(--u) * 8); line-height: 1.2; }
+[data-theme="marginalia"] .listen-art .cassette { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  [data-theme="marginalia"] .listen-stage:has(.ls.is-playing) .listen-art { animation: marg-spin 4s linear infinite; }
+  [data-theme="marginalia"] .listen-stage:has(.ls.is-playing) .listen-art::before { animation: marg-spin-back 4s linear infinite; }
+}
+@keyframes marg-spin { to { transform: rotate(360deg); } }
+@keyframes marg-spin-back { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(-360deg); } }
+[data-theme="marginalia"] .ls { background: var(--white); border: 1px solid var(--rule); border-radius: calc(var(--u) * 0.3); box-shadow: var(--soft); }
+[data-theme="marginalia"] .ls-count { background: none; color: var(--tomato); border: 0; border-bottom: 1px solid var(--tomato); border-radius: 0; padding: 0 0.1em; font-family: var(--font); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+[data-theme="marginalia"] .ls-label { font-family: var(--font); font-style: italic; text-transform: none; letter-spacing: 0.04em; }
+[data-theme="marginalia"] .ls-btn { background: var(--tomato); color: var(--white); border: 0; border-radius: calc(var(--u) * 0.3); box-shadow: 0 calc(var(--u) * 0.25) calc(var(--u) * 0.9) rgba(var(--tomato-rgb), 0.45); font-family: var(--display); font-weight: 400; letter-spacing: 0.02em; font-size: calc(var(--u) * 2.8); }
+[data-theme="marginalia"] .ls-btn:hover { background: #a63a46; }
+[data-theme="marginalia"] .ls-btn:active { transform: translate(1px, 1px); box-shadow: 0 calc(var(--u) * 0.1) calc(var(--u) * 0.4) rgba(var(--tomato-rgb), 0.45); }
+[data-theme="marginalia"] .ls[data-mode="playing"] .ls-btn { background: var(--navy); box-shadow: 0 calc(var(--u) * 0.25) calc(var(--u) * 0.9) rgba(var(--ink-rgb), 0.4); }
+[data-theme="marginalia"] .ls[data-mode="gap"] .ls-btn { background: none; color: var(--navy); box-shadow: inset 0 0 0 1px var(--navy); }
+[data-theme="marginalia"] .ls[data-mode="ready"] .ls-btn { background: var(--teal); box-shadow: 0 calc(var(--u) * 0.25) calc(var(--u) * 0.9) rgba(var(--teal-rgb), 0.45); }
+[data-theme="marginalia"] .ls[data-mode="done"] .ls-btn { background: var(--mustard); color: var(--navy); box-shadow: none; }
+[data-theme="marginalia"] .ls[data-mode="error"] .ls-btn { background: var(--muted); }
+[data-theme="marginalia"] .ls-bars i { width: calc(var(--u) * 0.2); border-radius: 0; background: var(--navy); }
+[data-theme="marginalia"] .ls-bars i:nth-child(3n) { background: var(--tomato); }
+[data-theme="marginalia"] .ls-bars i:nth-child(5n) { background: var(--navy); opacity: 0.5; }
+[data-theme="marginalia"] .ls-bar { background: rgba(var(--ink-rgb), 0.08); border: 0; border-radius: 0; height: 3px; }
+[data-theme="marginalia"] .ls-bar-fill { background: var(--tomato); }
+[data-theme="marginalia"] .g-bg { fill: var(--mustard-t); stroke: var(--navy); stroke-width: 1; }
+[data-theme="marginalia"] .g-fg { stroke: var(--tomato); }
+[data-theme="marginalia"] .ls-gap-n { font-family: var(--display); }
+[data-theme="marginalia"] .ls-status { font-family: var(--fang); }
+[data-theme="marginalia"] .ls-again { font-family: var(--font); font-style: italic; }
+[data-theme="marginalia"] .ls.nudge .ls-status { color: var(--tomato); }
+
+/* notes: a writing pad; answers appear in pen */
+[data-theme="marginalia"] .ncell { border-radius: calc(var(--u) * 0.2); background-image: repeating-linear-gradient(to bottom, transparent 0 calc(var(--u) * 3.2), rgba(var(--sky-rgb), 0.16) calc(var(--u) * 3.2) calc(calc(var(--u) * 3.2) + 1px)); background-position: 0 calc(var(--u) * 2.4); }
+[data-theme="marginalia"] .nc-h { font-family: var(--font); font-weight: 700; }
+[data-theme="marginalia"] .nc-h .badge { color: var(--sky); }
+[data-theme="marginalia"] .nc-sub { color: var(--muted); font-family: var(--font); font-style: italic; font-weight: 400; }
+[data-theme="marginalia"] .blank { border-bottom: 1.5px dotted rgba(var(--ink-rgb), 0.5); }
+[data-theme="marginalia"] .nc-arr { color: var(--tomato); font-family: var(--hand); font-weight: 400; }
+[data-theme="marginalia"] .nc-three i { background: none; color: var(--navy-2); border-radius: 0; border-bottom: 1px solid var(--rule); font-family: var(--font); font-style: italic; font-weight: 400; }
+[data-theme="marginalia"] .nk-ans { background: none; border: 0; border-bottom: 1.5px solid var(--tomato); border-radius: 0; color: var(--tomato); font-family: var(--hand); font-weight: 400; font-size: max(18px, calc(var(--u) * 1.9)); padding-left: 0; }
+[data-theme="marginalia"] .nk-text { font-family: var(--font); font-size: max(14px, calc(var(--u) * 1.2)); color: var(--navy-2); }
+[data-theme="marginalia"] .ctable { background: var(--white); border: 1px solid var(--rule); border-radius: calc(var(--u) * 0.2); box-shadow: var(--soft); }
+[data-theme="marginalia"] .ctable th, [data-theme="marginalia"] .ctable td { border-bottom: 1px solid var(--rule-2); }
+[data-theme="marginalia"] .ctable thead th { background: none; border-bottom: 4px double rgba(var(--ink-rgb), 0.4); font-family: var(--font); }
+[data-theme="marginalia"] .ctable thead th .pill::before { content: none; }
+[data-theme="marginalia"] .ctable td + td, [data-theme="marginalia"] .ctable th + th { border-left: 1px solid var(--rule-2); }
+[data-theme="marginalia"] .ctable tbody th { font-family: var(--fang); font-weight: 400; }
+[data-theme="marginalia"] .ct-note { font-family: var(--fang); }
+[data-theme="marginalia"] .ct-note b { background: linear-gradient(transparent 55%, rgba(var(--mustard-rgb), 0.85) 55%); border-radius: 0; }
+[data-theme="marginalia"] .model-body { flex: 1; justify-content: center; align-items: center; text-align: center; }
+[data-theme="marginalia"] .model-wrap { align-items: center; }
+[data-theme="marginalia"] .model-card p { font-family: var(--font); font-weight: 400; text-align: left; }
+[data-theme="marginalia"] .seg i { background: none !important; color: var(--tomato) !important; border-radius: 0; font-family: var(--hand); font-weight: 400; letter-spacing: 0.02em; font-size: max(16px, calc(var(--u) * 1.3)); text-align: right; }
+[data-theme="marginalia"] .model-prompt { font-family: var(--fang); }
+[data-theme="marginalia"] .model-prompt small { font-family: var(--font); font-style: italic; }
+[data-theme="marginalia"] .step-k { border: 1.5px solid currentColor; border-radius: 52% 48% 55% 45% / 47% 56% 44% 53%; background: none; font-family: var(--hand); font-weight: 400; color: var(--c, var(--navy)); transform: rotate(-4deg); }
+[data-theme="marginalia"] .step-name { font-family: var(--display); font-weight: 400; font-size: calc(var(--u) * 2.4); letter-spacing: 0; }
+[data-theme="marginalia"] .step-zh { font-family: var(--fang); }
+[data-theme="marginalia"] .step-ex { font-family: var(--font); font-weight: 400; border-top: 1px solid var(--rule); font-style: italic; }
+[data-theme="marginalia"] .st0 .step-card { background: var(--white); } [data-theme="marginalia"] .st1 .step-card { background: var(--mustard-t); } [data-theme="marginalia"] .st2 .step-card { background: var(--teal-t); } [data-theme="marginalia"] .st3 .step-card { background: var(--sky-t); }
+[data-theme="marginalia"] .sample-tag { background: none; border: 0; border-bottom: 1px dashed var(--muted); border-radius: 0; font-family: var(--font); font-style: italic; }
+[data-theme="marginalia"] .wr p { font-family: var(--display); font-weight: 400; font-size: calc(var(--u) * 2.6); letter-spacing: 0; }
+[data-theme="marginalia"] .wr p span { font-family: var(--fang); }
+[data-theme="marginalia"] .wr-ladder { font-family: var(--display); }
+[data-theme="marginalia"] .wr-ladder span { background: none; border: 0; border-bottom: 1px solid var(--rule); border-radius: 0; font-family: var(--font); font-style: italic; }
+[data-theme="marginalia"] .hw-k { background: none; color: var(--c, var(--navy)); border: 1.5px solid currentColor; border-radius: 52% 48% 55% 45% / 47% 56% 44% 53%; font-family: var(--hand); font-weight: 400; transform: rotate(-4deg); }
+[data-theme="marginalia"] .hw-en { font-family: var(--display); font-weight: 400; font-size: calc(var(--u) * 3.2); letter-spacing: 0; }
+[data-theme="marginalia"] .hw-min { background: none; border: 0; border-bottom: 1px solid var(--rule); border-radius: 0; font-family: var(--font); font-style: italic; }
+[data-theme="marginalia"] .hw-plan { background: linear-gradient(transparent 14%, var(--mustard) 14% 86%, transparent 86%); border: 0; border-radius: 0; font-family: var(--fang); font-weight: 400; color: var(--navy); padding: 0.2em 0.8em; }
+[data-theme="marginalia"] .hw-zh { font-family: var(--fang); font-weight: 400; }
+[data-theme="marginalia"] .send-en { font-family: var(--display); font-weight: 400; font-size: calc(var(--u) * 3.8); letter-spacing: 0; }
+[data-theme="marginalia"] .send-zh { font-family: var(--fang); }
+
+/* check card: column width follows how many cards each pass holds (base assumes 3 + 1 + 1) */
+[data-theme="marginalia"] .passes { display: flex; }
+[data-theme="marginalia"] .pass { flex: 1 1 0; min-width: 0; }
+[data-theme="marginalia"] .pass:has(.code-card:nth-child(2)) { flex-grow: 2; }
+[data-theme="marginalia"] .pass:has(.code-card:nth-child(3)) { flex-grow: 3; }
+
+/* ───────── density tiers: long routes (5 compact two-line rows, 6–7 airy / 8+ tight one-line contents leaders) ───────── */
+[data-theme="marginalia"] .route:has(> .station:nth-child(5)) { justify-content: flex-start; padding-bottom: 0; }
+[data-theme="marginalia"] .route:has(> .station:nth-child(5)) .station { padding: calc(var(--u) * 0.8) 0; }
+[data-theme="marginalia"] .route:has(> .station:nth-child(5)) .station-dot { font-size: calc(var(--u) * 3.2); }
+[data-theme="marginalia"] .route:has(> .station:nth-child(5)) .station-en { font-size: calc(var(--u) * 2.8); }
+[data-theme="marginalia"] .route:has(> .station:nth-child(5)) .station-zh { font-size: calc(var(--u) * 1.5); margin-top: calc(var(--u) * 0.1); }
+[data-theme="marginalia"] .route:has(> .station:nth-child(5)) .station::after { font-size: calc(var(--u) * 2.4); }
+[data-theme="marginalia"] .route:has(> .station:nth-child(5)) .route-break { top: calc(var(--u) * -1.2); left: calc(var(--u) * 1.6); transform: rotate(-4deg); }
+[data-theme="marginalia"] .route:has(> .station:nth-child(6)) .station { padding: calc(var(--u) * 1.2) 0; }
+[data-theme="marginalia"] .route:has(> .station:nth-child(8)) .station { padding: calc(var(--u) * 0.55) 0; }
+[data-theme="marginalia"] .route:has(> .station:nth-child(6)) .station-dot { font-size: calc(var(--u) * 2.6); }
+[data-theme="marginalia"] .route:has(> .station:nth-child(6)) .station-card { grid-template-columns: auto 1fr auto; }
+[data-theme="marginalia"] .route:has(> .station:nth-child(6)) .station-card::before { grid-column: 2; }
+[data-theme="marginalia"] .route:has(> .station:nth-child(6)) .station-en { font-size: calc(var(--u) * 2.5); }
+[data-theme="marginalia"] .route:has(> .station:nth-child(6)) .station-zh { grid-column: 3; grid-row: 1; font-size: calc(var(--u) * 1.4); margin: 0; justify-self: end; }
+[data-theme="marginalia"] .route:has(> .station:nth-child(6)) .station::after { font-size: calc(var(--u) * 2); }

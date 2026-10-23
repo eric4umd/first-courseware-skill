@@ -1,0 +1,10 @@
+# Fictional sample — a library desk phone call. Two speakers, numbers spoken via {…}.
+[Librarian] Good morning, library desk, this is Marco. How can I help?
+[Student] Hi, I'd like to book a study room for Thursday, please.
+[Librarian] Sure. Rooms are free from two thirty to six. How many people?
+[Student] Five of us. Is there a room with a screen?
+[Librarian] Room 3B{three B} has one. It holds up to six people, and it costs $4{four dollars} an hour.
+(pause 0.3)
+[Student] Okay. Can we have it from three to five?
+[Librarian] Two hours, so that's $8{eight dollars}. Please arrive ten minutes early, because the key stays at this desk.
+[Student] Great, thanks. My name is Yuna.

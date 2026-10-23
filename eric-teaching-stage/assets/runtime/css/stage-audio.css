@@ -1,0 +1,113 @@
+/* Eric Teaching Stage — listening player + sound toggle. Uses the D3 Index Cards tokens from deck.css. */
+
+/* ---------- sound toggle (footer) ---------- */
+.nav .snd-btn { display: inline-flex; align-items: center; gap: calc(var(--u) * 0.4); }
+.snd-btn svg { width: calc(var(--u) * 1.5); height: calc(var(--u) * 1.5); stroke: var(--navy); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.snd-btn .snd-x { display: none; stroke: var(--tomato); }
+.snd-btn.is-muted .snd-x { display: block; }
+.snd-btn.is-muted .snd-wave { display: none; }
+.snd-btn.is-muted { color: var(--muted); }
+
+/* ---------- listening player ---------- */
+.ls {
+  position: relative;
+  width: calc(var(--u) * 48);
+  display: grid; justify-items: center; gap: calc(var(--u) * 1.1);
+  padding: calc(var(--u) * 2) calc(var(--u) * 2.4) calc(var(--u) * 1.8);
+  background: var(--white);
+  border: var(--bw) solid var(--navy); border-radius: var(--r);
+  box-shadow: var(--off) var(--off) 0 var(--navy);
+}
+.ls-top { width: 100%; display: flex; align-items: center; justify-content: space-between; }
+.ls-count {
+  background: var(--navy); color: var(--white); border-radius: 999px;
+  padding: calc(var(--u) * 0.25) calc(var(--u) * 1.1);
+  font-weight: 700; letter-spacing: 0.06em; font-size: max(14px, calc(var(--u) * 1));
+}
+.ls-label { color: var(--muted); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; font-size: max(13px, calc(var(--u) * 0.85)); }
+
+.ls-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: calc(var(--u) * 1);
+  min-width: calc(var(--u) * 22); padding: calc(var(--u) * 1.1) calc(var(--u) * 2.6);
+  background: var(--tomato); color: var(--white);
+  border: var(--bw) solid var(--navy); border-radius: 999px;
+  box-shadow: calc(var(--off) * 0.9) calc(var(--off) * 0.9) 0 var(--navy);
+  font-weight: 900; font-size: calc(var(--u) * 2.1); letter-spacing: -0.01em;
+  transition: transform 90ms ease, box-shadow 90ms ease, background-color 150ms ease;
+}
+.ls-btn:hover { background: #f26b50; }
+.ls-btn:active { transform: translate(3px, 3px); box-shadow: calc(var(--off) * 0.35) calc(var(--off) * 0.35) 0 var(--navy); }
+.ls[data-mode="playing"] .ls-btn { background: var(--navy); }
+.ls[data-mode="gap"] .ls-btn { background: var(--white); color: var(--navy); font-size: calc(var(--u) * 1.5); }
+.ls[data-mode="ready"] .ls-btn { background: var(--teal); animation: ls-pulse 1s ease-in-out infinite; }
+.ls[data-mode="done"] .ls-btn { background: var(--mustard); color: var(--navy); pointer-events: none; }
+.ls[data-mode="error"] .ls-btn { background: var(--muted); pointer-events: none; }
+@keyframes ls-pulse { 50% { transform: scale(1.04); } }
+
+.ls-ico { width: calc(var(--u) * 2); height: calc(var(--u) * 2); display: inline-block; position: relative; flex: none; }
+.ls-ico::before, .ls-ico::after { content: ""; position: absolute; }
+.ls-ico.i-play::before { left: 18%; top: 4%; border-style: solid; border-width: calc(var(--u) * 1) 0 calc(var(--u) * 1) calc(var(--u) * 1.7); border-color: transparent transparent transparent currentColor; }
+.ls-ico.i-pause::before, .ls-ico.i-pause::after { top: 8%; width: 24%; height: 84%; background: currentColor; border-radius: 2px; }
+.ls-ico.i-pause::before { left: 14%; } .ls-ico.i-pause::after { right: 14%; }
+.ls-ico.i-wait::before { inset: 10%; border: calc(var(--u) * 0.25) solid currentColor; border-radius: 50%; }
+.ls-ico.i-wait::after { left: 47%; top: 24%; width: 6%; height: 30%; background: currentColor; transform-origin: 50% 90%; }
+.ls-ico.i-check::before { left: 14%; top: 22%; width: 62%; height: 32%; border-left: calc(var(--u) * 0.4) solid currentColor; border-bottom: calc(var(--u) * 0.4) solid currentColor; transform: rotate(-45deg); }
+
+.ls-bars { display: flex; align-items: center; gap: calc(var(--u) * 0.32); height: calc(var(--u) * 4.4); }
+.ls-bars i {
+  display: block; width: calc(var(--u) * 0.55); height: 100%; border-radius: 3px;
+  background: var(--sky); transform: scaleY(0.12); transform-origin: 50% 50%;
+  animation: ls-eq 0.8s ease-in-out infinite alternate; animation-play-state: paused;
+}
+.ls-bars i:nth-child(3n) { background: var(--teal); }
+.ls-bars i:nth-child(5n) { background: var(--mustard); }
+.ls.is-playing .ls-bars i { animation-play-state: running; }
+@keyframes ls-eq { from { transform: scaleY(0.14); } to { transform: scaleY(0.95); } }
+
+.ls-bar { width: 100%; height: calc(var(--u) * 0.5); background: rgba(29, 42, 77, 0.1); border-radius: 999px; overflow: hidden; border: 1.5px solid var(--navy); }
+.ls-bar-fill { width: 0; height: 100%; background: var(--teal); transition: width 200ms linear; }
+
+.ls-gap { display: none; position: absolute; right: calc(var(--u) * 2.2); top: calc(var(--u) * 5.2); width: calc(var(--u) * 6.4); height: calc(var(--u) * 6.4); }
+.ls[data-mode="gap"] .ls-gap { display: block; }
+.ls-gap svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.g-bg { fill: var(--mustard-t); stroke: var(--navy); stroke-width: 1.4; }
+.g-fg { fill: none; stroke: var(--teal); stroke-width: 5; stroke-dasharray: 1 1; transition: stroke-dashoffset 200ms linear; }
+.ls-gap-n { position: absolute; inset: 0; display: grid; place-items: center; font-weight: 900; font-size: calc(var(--u) * 2.4); }
+
+.ls-status { color: var(--navy); font-weight: 600; text-align: center; min-height: 1.4em; font-size: calc(var(--u) * 1.3); }
+.ls-again { color: var(--muted); font-size: max(14px, calc(var(--u) * 1)); text-decoration: underline; text-underline-offset: 3px; }
+.ls-again:hover { color: var(--navy); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ls-bars i { animation: none; transform: scaleY(0.5); }
+  .ls[data-mode="ready"] .ls-btn { animation: none; }
+}
+
+/* ---------- listening scene layout (stage_kit.listening) ---------- */
+.listen-stage { display: flex; align-items: center; justify-content: center; gap: calc(var(--u) * 4); min-height: calc(var(--u) * 40); margin-top: calc(var(--u) * 1.5); }
+.listen-art { width: calc(var(--u) * 30); flex: none; }
+.listen-art .cassette { width: 100%; height: auto; display: block; }
+
+/* ---------- compact row layout: <div class="listen" data-layout="bar"> sits under a note grid ---------- */
+.ls.ls-row {
+  width: 100%;
+  grid-template-columns: auto auto 1fr auto; align-items: center; justify-items: stretch;
+  grid-template-areas: "top btn bars gap" "bar bar bar bar" "status status status again";
+  column-gap: calc(var(--u) * 2.2); row-gap: calc(var(--u) * 0.7);
+  padding: calc(var(--u) * 1.2) calc(var(--u) * 2.2) calc(var(--u) * 1);
+}
+.ls-row .ls-top { grid-area: top; flex-direction: column; align-items: flex-start; gap: calc(var(--u) * 0.4); width: auto; }
+.ls-row .ls-btn { grid-area: btn; font-size: calc(var(--u) * 1.8); min-width: calc(var(--u) * 17); padding: calc(var(--u) * 0.8) calc(var(--u) * 2); }
+.ls-row .ls-bars { grid-area: bars; height: calc(var(--u) * 3); justify-content: center; }
+.ls-row .ls-bar { grid-area: bar; }
+.ls-row .ls-status { grid-area: status; text-align: left; font-size: calc(var(--u) * 1.15); }
+.ls-row .ls-again { grid-area: again; justify-self: end; }
+.ls-row .ls-gap { grid-area: gap; position: static; display: block; visibility: hidden; width: calc(var(--u) * 4.6); height: calc(var(--u) * 4.6); }
+.ls-row[data-mode="gap"] .ls-gap { visibility: visible; }
+.ls-row .ls-gap-n { font-size: calc(var(--u) * 1.7); }
+
+/* held advance: the player shakes once and tells the teacher why the deck did not move */
+.ls.nudge { animation: ls-nudge 0.5s ease; }
+.ls.nudge .ls-status { color: var(--tomato); }
+@keyframes ls-nudge { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-10px); } 40% { transform: translateX(9px); } 60% { transform: translateX(-6px); } 80% { transform: translateX(4px); } }
+@media (prefers-reduced-motion: reduce) { .ls.nudge { animation: none; outline: 3px solid var(--tomato); } }

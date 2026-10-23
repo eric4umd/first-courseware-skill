@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sound Lab</title>
+<link rel="stylesheet" href="../runtime/css/stage-audio.css">
+<style>
+  :root { --u: 10px; --paper:#fff8ec; --navy:#1d2a4d; --navy-2:#2d3d6b; --muted:#6a7390; --tomato:#ee5b3e; --mustard:#f3b23b; --teal:#169c86; --sky:#4a98e6; --white:#fff; --mustard-t:#fdeccb; --bw:2px; --off:5px; --r:12px;
+          --font: "PingFang SC", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--navy); font: 16px/1.5 var(--font); }
+  main { max-width: 880px; margin: 0 auto; padding: 28px 16px 60px; }
+  h1 { font-size: 34px; letter-spacing: -0.02em; margin: 0 0 4px; }
+  p.lead { color: var(--muted); margin: 0 0 22px; }
+  h2 { font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 34px 0 10px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+  .cue { background: #fff; border: 2px solid var(--navy); border-radius: 12px; box-shadow: 4px 4px 0 var(--navy); padding: 12px 14px; text-align: left; cursor: pointer; font: inherit; color: inherit; }
+  .cue:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--navy); }
+  .cue b { display: block; font-size: 17px; }
+  .cue span { display: block; color: var(--muted); font-size: 13.5px; }
+  .cue small { display: block; margin-top: 6px; font: 12px ui-monospace, Menlo, monospace; color: var(--teal); }
+  .bar { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; background: #fff; border: 2px solid var(--navy); border-radius: 12px; padding: 10px 14px; }
+  .bar button { border: 2px solid var(--navy); border-radius: 999px; background: var(--mustard-t); padding: 4px 14px; font: inherit; cursor: pointer; }
+  input[type=range] { width: 200px; accent-color: var(--tomato); }
+  .ls { margin: 0 auto; }
+  .note { font-size: 14px; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Sound Lab</h1>
+  <p class="lead">Every effect is synthesized live — no audio files. Click to hear. Nothing plays by itself.</p>
+
+  <div class="bar">
+    <label>Volume <input id="vol" type="range" min="0" max="100" value="80"></label>
+    <button id="mute" type="button">Sound: on</button>
+    <span class="note">In class: M toggles sound effects. Listening audio is not affected by mute.</span>
+  </div>
+
+  <h2>Sound palette</h2>
+  <div class="bar" id="pal"></div>
+  <p class="note" id="paldesc"></p>
+  <h2>Sound effects</h2>
+  <div class="grid" id="grid"></div>
+
+  <h2>Listening player</h2>
+  <p class="note">Same component the decks use. Play 1 → 45 s countdown → Play 2. Press P or click.</p>
+  <section class="scene is-on" style="all:unset;display:block">
+    <div class="listen" data-src="__LISTEN_SRC__" data-plays="2" data-gap="__GAP__" data-label="Listening"></div>
+  </section>
+</main>
+
+<script src="../runtime/js/stage-audio.js"></script>
+<script>
+  var INFO = {
+    beat: ["Next beat", "paper-card tap"],
+    scene: ["Next scene", "card slides over and lands"],
+    back: ["Back", "reverse brush"],
+    reveal: ["看对照 / Stuck?", "two soft mallet notes"],
+    pick: ["Choice (neutral)", "small tick"],
+    pickOk: ["Choice · right", "bright two-note"],
+    pickNo: ["Choice · not yet", "soft wooden knock, never harsh"],
+    tallyUp: ["Counter +", "rising pop"],
+    tallyDown: ["Counter −", "falling pop"],
+    timerStart: ["Timer start", "cassette PLAY key: click, thunk, click"],
+    timerPause: ["Timer pause", "single key click"],
+    timerReset: ["Timer reset", "short rewind"],
+    timerDone: ["Timer done", "two-note bell, twice"],
+    listenStart: ["Before a recording", "exam-style ding-dong"],
+    gapDone: ["Gap over", "rising three-note"],
+    done: ["Finished", "small fanfare"],
+    on: ["Sound on", ""], off: ["Sound off", ""]
+  };
+  function dB(x) { return (20 * Math.log10(Math.max(x, 1e-6))).toFixed(1); }
+  var PAL = {
+    "": ["D3 Index Cards (default)", "paper-card taps, mallets, hand-bell"],
+    marginalia: ["Marginalia", "paper and pencil: ticks, page turns, scribbles, one desk bell"],
+    grid: ["Grid", "mechanical: clicks, ratchets, square beeps"],
+    studio: ["Studio", "warm stage: low thumps, swells, slow pads"],
+    exam: ["Exam Screen", "almost silent ticks, plain beeps"]
+  };
+  var grid = document.getElementById("grid");
+  var smalls = {};
+  StageAudio.names.filter(function (n) { return n !== "jump"; }).forEach(function (n) {
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "cue";
+    var i = INFO[n] || [n, ""];
+    b.innerHTML = "<b>" + i[0] + "</b><span>" + i[1] + "</span><small>measuring…</small>";
+    b.addEventListener("click", function () { StageAudio.unlock(); StageAudio.cue(n, true); });
+    grid.appendChild(b);
+    smalls[n] = b.querySelector("small");
+  });
+  function measure() {
+    Object.keys(smalls).forEach(function (n) {
+      smalls[n].textContent = "measuring…";
+      StageAudio.renderCue(n, 2.2).then(function (d) {
+        var pk = 0, last = 0;
+        for (var k = 0; k < d.length; k++) { var a = Math.abs(d[k]); if (a > pk) pk = a; if (a > 0.002) last = k; }
+        smalls[n].textContent = "peak " + dB(pk) + " dBFS · " + (last / 44100).toFixed(2) + " s";
+      });
+    });
+  }
+  var pal = document.getElementById("pal"), paldesc = document.getElementById("paldesc");
+  function showPal(name) {
+    StageAudio.usePalette(name);
+    Array.prototype.forEach.call(pal.children, function (btn) { btn.setAttribute("aria-pressed", String(btn.dataset.p === name)); btn.style.fontWeight = btn.dataset.p === name ? "800" : "500"; });
+    paldesc.textContent = PAL[name][1] + ". Only beat, scene, back, reveal and timer-done change; the functional cues are shared.";
+    measure();
+  }
+  Object.keys(PAL).forEach(function (name) {
+    var btn = document.createElement("button");
+    btn.type = "button"; btn.dataset.p = name; btn.textContent = PAL[name][0];
+    btn.addEventListener("click", function () { showPal(name); });
+    pal.appendChild(btn);
+  });
+  showPal(document.documentElement.getAttribute("data-theme") || "");
+  var vol = document.getElementById("vol");
+  vol.addEventListener("input", function () { StageAudio.setVolume(vol.value / 100); });
+  vol.value = Math.round(StageAudio.volume * 100);
+  var mute = document.getElementById("mute");
+  function paint() { mute.textContent = "Sound: " + (StageAudio.enabled ? "on" : "off"); }
+  mute.addEventListener("click", function () { StageAudio.setEnabled(!StageAudio.enabled); paint(); });
+  paint();
+</script>
+</body>
+</html>
