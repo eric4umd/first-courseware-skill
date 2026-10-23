@@ -7,7 +7,7 @@ metadata:
 
 # Eric Teaching Press
 
-Companion Skill for the 「Eric带你学AI」 teaching tutorials. Start with [the repository guide](../README.md). D1 Marginalia, D2 Grid and D3 Index Cards share one lesson-content source. Choose a style from [styles.md](references/styles.md) to fit the material.
+Companion Skill for the 「Eric带你学AI」 teaching tutorials. Start with [the repository guide](https://github.com/eric4umd/teaching-skills#readme). D1 Marginalia, D2 Grid and D3 Index Cards share one lesson-content source. Choose a style from [styles.md](references/styles.md) to fit the material.
 
 Use the skill directory containing this file as `SKILL_ROOT`; resolve a symlink to its target. All resource paths below are relative to that root. Work in a new authorized output folder, never inside the installed assets or the original exploration.
 

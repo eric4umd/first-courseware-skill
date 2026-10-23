@@ -6,7 +6,7 @@
 
 I used to stay up late making lesson slides. Then I started writing down the rules I care about in class, one at a time, and saved them into two Skills: one drafts the handout, the other turns that handout into the deck I teach from. Once a rule is written down clearly, the AI reads it before every new lesson, so I never have to say the same thing twice.
 
-I'm sharing both Skills here. You can use them as they are to make your first lesson deck, or use them as a model for writing a Skill of your own, built from what you know in your own line of work.
+This is the first episode of my 「你的第一个……」 ("Your first …") series, and I'm sharing both Skills here. You can use them as they are to make your first lesson deck, or use them as a model for writing a Skill of your own, built from what you know in your own line of work.
 
 > **What's a Skill?** A set of instructions written for an AI. It tells the AI how a certain kind of task is done, where it tends to go wrong, and how to check the result. The AI reads it every time before it starts.
 
@@ -60,6 +60,11 @@ and how to adapt them to my own lessons.
 ```
 
 If you've watched the video, you can also screenshot the install screen and send it with one line: "Follow this image."
+
+> [!TIP]
+> **Don't walk away the first time you run it.** It stops to ask before installing software or deleting temporary files, and it will wait as long as it takes for your answer.
+
+One real run of mine: WorkBuddy V5.8.3 on a Mac, with DeepSeek V4.1 Flash as the model, and Python, Typst and Node already installed. From sending the screenshot to installing both Skills and building one sample handout and one sample deck, it worked for about 6 minutes and used about 4 credits. The Skills went into `~/.workbuddy/skills/`. Halfway through, it stopped to ask whether it could delete a temporary file; I didn't notice, so it sat there waiting for over ten minutes. The more your computer is missing, the longer it takes and the more credits it uses.
 
 ### 3. Your first lesson: handout first, then the deck
 
