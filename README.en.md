@@ -63,6 +63,8 @@ If you've watched the video, you can also screenshot the install screen and send
 
 > [!TIP]
 > **Don't walk away the first time you run it.** It stops to ask before installing software or deleting temporary files, and it will wait as long as it takes for your answer.
+>
+> If the prompts get tiresome, you can do what I did: switch the permission setting under the input box to **Allow full access**, and it stops asking step by step. It also won't ask before installing software or deleting files, though, so first make sure the folder it works in holds nothing important. You can switch it back when you're done.
 
 One real run of mine: WorkBuddy V5.8.3 on a Mac, with DeepSeek V4.1 Flash as the model, and Python, Typst and Node already installed. From sending the screenshot to installing both Skills and building one sample handout and one sample deck, it worked for about 6 minutes and used about 4 credits. The Skills went into `~/.workbuddy/skills/`. Halfway through, it stopped to ask whether it could delete a temporary file; I didn't notice, so it sat there waiting for over ten minutes. The more your computer is missing, the longer it takes and the more credits it uses.
 
