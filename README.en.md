@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="assets/banner-en.png" alt="No more late nights making lesson slides: two AI Skills for teachers · Eric带你学AI" width="100%">
+  <img src="assets/banner-en.png" alt="Your first courseware Skill · Eric带你学AI" width="100%">
 </p>
 
 <p align="center"><a href="README.md">中文</a>　｜　<b>English</b></p>
 
 I used to stay up late making lesson slides. Then I started writing down the rules I care about in class, one at a time, and saved them into two Skills: one drafts the handout, the other turns that handout into the deck I teach from. Once a rule is written down clearly, the AI reads it before every new lesson, so I never have to say the same thing twice.
 
-This is the first episode of my 「你的第一个……」 ("Your first …") series, and I'm sharing both Skills here. You can use them as they are to make your first lesson deck, or use them as a model for writing a Skill of your own, built from what you know in your own line of work.
+This is the first episode of my 「你的第一个……」 ("Your first …") series: **your first courseware Skill**. I'm sharing both Skills here. Use them as they are to make your first lesson, then tell an AI the few things you care about in your own classes and get a courseware Skill of your own.
 
 > **What's a Skill?** A set of instructions written for an AI. It tells the AI how a certain kind of task is done, where it tends to go wrong, and how to check the result. The AI reads it every time before it starts.
 
@@ -40,7 +40,7 @@ Copy this message to it. It will read the instructions, check what your computer
 
 ```text
 Please install the teaching Skills from 「Eric带你学AI」:
-https://github.com/eric4umd/teaching-skills
+https://github.com/eric4umd/first-courseware-skill
 
 Start by reading the repo README and both SKILL.md files,
 and confirm whether you support local Skills.
@@ -95,19 +95,41 @@ Even when the AI says it has checked everything, that doesn't mean nothing is wr
 - If there's listening, check that the player and the note-taking boxes are on the same page.
 - Go through the handout's questions, answers and explanations once.
 
-When something is off, tell it: **which page, what's wrong, what it looks like now, and what it should look like.** If you'll want it that way in every lesson, add: "Write this into the Skill's rules."
+When something is off, tell it: **which page, what's wrong, what it looks like now, and what it should look like.** If you'll want it that way in every lesson, add: "Write this into the Skill."
 
-## Write a Skill of your own
+## Make your own first courseware Skill
 
-These two Skills were written around my own English classes. If you teach another subject, or you're not a teacher at all, what you care about will be different.
+These two Skills were written around my own English classes. If you teach another subject or another grade, what you care about will be different.
 
-Every time you've told an AI "that's not right," you were drawing on experience from your own line of work, something the AI can't guess on its own. Turn each one into a rule with three parts:
+You don't have to write a Skill word by word yourself. Your job is to know what you want in it and what you don't, and tell the AI. The writing is its job.
 
-1. **What went wrong.** The listening player landed on the next page, so one press of the space bar and the whole recording was gone.
-2. **What to do from now on.** Put the note-taking boxes and the player on the same page, and stop the teacher from moving on before the recording has played.
-3. **When there's an exception, and how to check.** If the teacher really wants to skip, one more press lets them through. When testing, try that stop on purpose.
+**Put in**
 
-Collect a few rules like these, hand them to the AI together with a finished piece you're happy with, and ask it to write a Skill. Weekly reports, quotes, any document you rebuild every week: the same approach works.
+- **When to use it.** One line saying what it's for. The AI reads that line to decide whether to use the Skill.
+- **The things you care about.** Every "that's not right" you've told an AI: what was wrong and what it should be instead. For example, the listening player goes on the same page as the note-taking boxes, and the deck stops you from moving on before the recording has played.
+- **What stays your call.** The AI can't hear audio, so for voices, have it make an audition page and you pick.
+
+**Leave out**
+
+- **Anything that changes every time**, like what this lesson covers or which student it's for. Say that in each conversation.
+- **Vague wishes** like "make it look nice." The AI can't tell what counts as nice, and nobody can check it afterwards. Be specific instead: "English examples in a sans-serif font, readable on a projected screen."
+
+The easiest start is to use my Skill as the base and say:
+
+```text
+Using eric-teaching-stage as the base, make me a courseware Skill
+of my own.
+I teach [subject, grade], [how you teach, e.g. one-on-one online].
+The things I care about:
+1. [what was wrong, and what it should be instead]
+2. [...]
+These stay my call: [e.g. example sentences, difficulty].
+When it's written, use it to make [a new lesson] and show me.
+```
+
+When something's off later, tell it which page, what it looks like now and what it should look like, then add: "Write this into the Skill." You don't need everything on day one. Start with the few things you care about most, and add one each time you use it.
+
+Not a teacher? Same idea. Weekly reports, quotes, any document you rebuild every week can get a Skill of its own this way.
 
 ## Software you'll need
 
@@ -142,6 +164,6 @@ I haven't chosen a license yet for my own instructions, code and layouts. Being 
 
 ---
 
-Made something with these? Or is there something you've always wanted to build but thought you couldn't? Tell me in the comments under the 「Eric带你学AI」 videos, or open an [issue](https://github.com/eric4umd/teaching-skills/issues) here.
+Made something with these? Or is there something you've always wanted to build but thought you couldn't? Tell me in the comments under the 「Eric带你学AI」 videos, or open an [issue](https://github.com/eric4umd/first-courseware-skill/issues) here.
 
 **I'm Eric. Let's build what you've been dreaming of.**

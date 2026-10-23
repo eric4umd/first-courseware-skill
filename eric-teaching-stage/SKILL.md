@@ -5,7 +5,7 @@ description: '【教学网页·有声】Build teacher-controlled HTML classroom 
 
 # Eric Teaching Stage
 
-Companion Skill for the 「Eric带你学AI」 teaching tutorials. Read [the repository guide](https://github.com/eric4umd/teaching-skills#readme) for installation and dependencies. Use the directory containing this file as `SKILL_ROOT`; commands below run from that directory.
+Companion Skill for the 「Eric带你学AI」 teaching tutorials. Read [the repository guide](https://github.com/eric4umd/first-courseware-skill#readme) for installation and dependencies. Use the directory containing this file as `SKILL_ROOT`; commands below run from that directory.
 
 Build a classroom deck that looks and feels like a finished product: D3 Index Cards visuals, soft sound design, and a listening player that speaks like a person. Everything runs from a double-clicked `lesson.html`, offline, in Safari, Chrome and screen share.
 
